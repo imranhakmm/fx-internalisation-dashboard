@@ -1,0 +1,8 @@
+matplotlib==3.9.4
+numpy==2.0.2
+pandas==2.3.3
+plotly==6.7.0
+polars==1.36.1
+pyarrow==21.0.0
+pytest==8.4.2
+streamlit==1.50.0
