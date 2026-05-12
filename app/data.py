@@ -11,9 +11,11 @@ import polars as pl
 import streamlit as st
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = PROJECT_ROOT / "data"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.data_gen import generate_and_write_dataset
 from src.markouts import DEFAULT_HORIZONS_SECONDS, compute_markouts
 from src.actions import Recommendation, apply_recommendation_to_config, generate_recommendations
 from src.pnl import (
@@ -43,9 +45,25 @@ def config_hash(config: PricingConfig) -> str:
 
 @st.cache_data(show_spinner=False)
 def load_market_data() -> dict[str, pl.DataFrame]:
+    trades_path = DATA_DIR / "trades.parquet"
+    ticks_path = DATA_DIR / "ticks.parquet"
+
+    if not (trades_path.exists() and ticks_path.exists()):
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        generate_and_write_dataset(DATA_DIR)
+
+    try:
+        trades = pl.read_parquet(trades_path)
+        ticks = pl.read_parquet(ticks_path)
+    except Exception:
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        generate_and_write_dataset(DATA_DIR)
+        trades = pl.read_parquet(trades_path)
+        ticks = pl.read_parquet(ticks_path)
+
     return {
-        "trades": pl.read_parquet(PROJECT_ROOT / "data" / "trades.parquet"),
-        "ticks": pl.read_parquet(PROJECT_ROOT / "data" / "ticks.parquet"),
+        "trades": trades,
+        "ticks": ticks,
     }
 
 

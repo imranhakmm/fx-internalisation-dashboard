@@ -237,6 +237,10 @@ Run the dashboard:
 
     streamlit run app/Home.py
 
+For tests and local verification scripts, install the development extras:
+
+    pip install -r requirements-dev.txt
+
 Run the test suite (currently 24 tests across data generation, markouts, pricing, PnL, toxicity and actions):
 
     pytest tests/ -v
