@@ -18,6 +18,7 @@ from app.charts import (
     build_pnl_waterfall,
 )
 from app.data import config_hash, load_dashboard_data
+from app._styles import apply_global_styles
 from src.pricing import get_active_config
 
 
@@ -71,6 +72,7 @@ def style_detail_table(detail_table: pl.DataFrame) -> pd.io.formats.style.Styler
 
 def render_page() -> None:
     st.set_page_config(page_title="PnL Attribution", layout="wide")
+    apply_global_styles()
     st.title("PnL Attribution")
     st.caption("Where the book made and lost money — by source, by tag, by pair, by hour.")
 

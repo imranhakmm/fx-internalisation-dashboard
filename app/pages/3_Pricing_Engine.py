@@ -15,6 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from app.charts import build_pnl_delta_by_tag
 from app.data import config_hash, load_dashboard_data, load_projected_snapshot
 from app.formatting import fmt_pct, fmt_usd_per_million, fmt_usd_signed
+from app._styles import apply_global_styles
 from src.pricing import DEFAULT_CONFIG, PricingConfig, config_to_payload, get_active_config
 
 PAIR_ORDER = ["EURUSD", "USDJPY", "GBPUSD"]
@@ -241,6 +242,7 @@ def _internalisation_ratio(trades_with_pnl: pl.DataFrame) -> float:
 
 def render_page() -> None:
     st.set_page_config(page_title="Pricing Engine", layout="wide")
+    apply_global_styles()
     st.title("Pricing Engine")
     st.caption("Adjust pricing and routing parameters; see projected PnL impact in real time.")
 

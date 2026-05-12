@@ -11,6 +11,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from app.data import config_hash, load_actions_bundle, load_dashboard_data
 from app.formatting import fmt_count, fmt_usd_signed
+from app._styles import apply_global_styles
 from src.actions import Recommendation, apply_recommendation_to_config
 from src.pricing import config_to_payload, get_active_config
 
@@ -84,6 +85,7 @@ def _apply_all_recommendations(config, recommendations: list[Recommendation]):
 
 def render_page() -> None:
     st.set_page_config(page_title="Actions", layout="wide")
+    apply_global_styles()
     st.title("Actions")
     st.caption("Auto-generated recommendations from flow behaviour and current PnL. One-click apply propagates to all pages.")
 

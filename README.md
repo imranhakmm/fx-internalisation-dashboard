@@ -1,8 +1,20 @@
-![Demo](docs/demo.gif)
-
 # FX Internalisation Dashboard
 
 Interactive Streamlit dashboard for analysing the pricing, routing, and PnL of a market-maker's internalisation book in spot FX.
+
+![Python](https://img.shields.io/badge/python-3.12+-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-app-FF4B4B)
+![Polars](https://img.shields.io/badge/Polars-1.40+-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+## Links
+
+- Live app: https://imranhakmm-fx-marketmaking-dashboard-home.streamlit.app/
+- GitHub: https://github.com/imranhakmm/fx-internalisation-dashboard
+
+## Dashboard preview
+
+![Demo](docs/demo.gif)
 
 ## Overview
 
@@ -60,7 +72,24 @@ Waterfall of total book PnL: spread capture minus AS drag minus hedge cost equal
 
 ### Pricing Engine
 
-Interactive control panel. Per-pair half-spread and hedge cost sliders. Routing thresholds (size limit, toxicity threshold, inventory decay seconds). Per-tag widen and route overrides. Projected PnL delta tiles update live as any slider moves. Per-tag PnL delta bar chart. A route flips table showing which tags route differently under the pending config. Apply / Reset buttons that propagate the new config across the other pages.
+The interactive control surface — this is where the dashboard turns from a static report into a tool. Six categories of parameters mirror what a real pricing engine config exposes:
+
+- **Per-pair half-spread** — how wide the LP quotes each pair (basis points each side).
+- **Per-pair hedge cost** — the implicit half-spread paid when offsetting in the inter-dealer market.
+- **Size threshold** — the per-trade notional above which a trade auto-hedges regardless of toxicity.
+- **Toxicity threshold** — the routing score above which a tag auto-hedges.
+- **Inventory decay seconds (`T_int`)** — how long internalised positions sit on the book before being marked to mid. This single parameter also determines which toxicity horizon drives routing decisions, since adverse selection is realised over the hold period.
+- **Per-tag overrides** — extra widen in basis points, or a forced route (`internalise` / `hedge` / `reject`) that bypasses the threshold logic.
+
+As any slider moves, projected book PnL recomputes in real time. The cached loader keeps this at roughly 150ms on a fresh recompute and 3ms on a cache hit, so the interaction feels instant. KPI delta tiles update with directional arrows (green for improvements, red for losses), and `delta_color="inverse"` is set on the AS drag and hedge cost tiles so a drop in either is rendered as a green improvement rather than a red decrease.
+
+A live **route flips** table appears alongside the deltas, showing only the tags whose routing decision would change under the pending config — useful when adjusting parameters and wanting to verify a change actually moves the routing logic rather than just shifting dollar amounts.
+
+The **Apply to dashboard** button commits the pending config to session state, which the cached loader hashes so the Home and PnL Attribution pages refresh against the new config on their next visit. **Reset to defaults** clears the session config and reverts all sliders.
+
+<img src="docs/pricing-engine.png" width="720">
+
+The `PB_C` example is instructive on this page. Its default toxicity score is small (~0.12), well below the 0.30 threshold, so it routes to internalise. But its notional is large (~$6.3bn for the day) and the resulting AS drag exceeds the spread captured. Overriding `PB_C` to `hedge` via the per-tag dropdown shows a projected +$283k improvement to total book PnL before clicking Apply — exactly the kind of decision the Actions page surfaces automatically.
 
 ### Actions — recommendation engine
 

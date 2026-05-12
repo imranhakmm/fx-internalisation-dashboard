@@ -13,6 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from app.charts import build_horizon_curve, build_markout_box, build_tag_pair_heatmap
 from app.data import config_hash, load_dashboard_data
+from app._styles import apply_global_styles
 from src.pricing import get_active_config
 from src.toxicity import (
     compute_tag_horizon_curve,
@@ -77,6 +78,7 @@ def style_detail_table(detail_table: pl.DataFrame) -> pd.io.formats.style.Styler
 
 def render_page() -> None:
     st.set_page_config(page_title="Flow & Toxicity", layout="wide")
+    apply_global_styles()
     st.title("Flow & Toxicity")
     st.caption("Per-tag markout profiles, toxicity by tag and pair, and distribution analysis.")
 

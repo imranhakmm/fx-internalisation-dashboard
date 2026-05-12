@@ -15,6 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from app.data import config_hash, load_dashboard_data
 from app.charts import build_cumulative_pnl_chart, build_routing_breakdown_chart
 from app.formatting import fmt_count, fmt_pct, fmt_usd_compact, fmt_usd_per_million, fmt_usd_signed
+from app._styles import apply_global_styles
 from src.pricing import get_active_config
 
 
@@ -214,6 +215,7 @@ def render_dashboard() -> None:
         page_icon="📈",
         layout="wide",
     )
+    apply_global_styles()
 
     config = get_active_config()
     data = load_dashboard_data(config_hash(config))
@@ -265,9 +267,17 @@ def render_dashboard() -> None:
     toxicity_table = build_toxicity_table(per_tag, reporting_scores, routing_scores, trades_with_pnl)
 
     st.title("eFX Internalisation Dashboard")
-    st.caption("KPI overview — synthetic G3 FX flow, default routing config")
     st.markdown(
-        "_Pricing engine, flow toxicity, and PnL attribution on a simulated trading day._"
+        """
+        A simulated market-maker's book trading three G3 FX pairs. The pricing engine decides whether each
+        incoming client trade is **internalised** (kept on the book, then marked to mid after a short hold
+        horizon) or **hedged** (immediately offset in the inter-dealer market). Realised PnL is decomposed
+        into **spread capture**, **adverse selection drag**, and **hedge cost**.
+
+        The four pages in the sidebar break this down further: **Flow & Toxicity** for per-tag markout analysis,
+        **PnL Attribution** for the income statement, **Pricing Engine** for live parameter tuning, and
+        **Actions** for auto-generated recommendations.
+        """
     )
     st.caption(
         "Default config: half_spread {EURUSD: 0.2 / USDJPY: 0.3 / GBPUSD: 0.4} bp · "

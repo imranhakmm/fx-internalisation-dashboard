@@ -90,6 +90,7 @@ def build_cumulative_pnl_chart(cumulative_ts: pl.DataFrame) -> go.Figure:
 
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": "Cumulative PnL by source (USD)", "font": {"size": 16}},
         height=440,
         hovermode="x unified",
@@ -145,6 +146,7 @@ def build_routing_breakdown_chart(
     )
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": title, "font": {"size": 14}},
         height=320,
         barmode="stack",
@@ -235,6 +237,7 @@ def build_horizon_curve(curve_df: pl.DataFrame, selected_tags: Sequence[str]) ->
     figure.add_hline(y=0.0, line_dash="dash", line_color="#888888", line_width=1)
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": "Mean markout (bp) vs horizon — LP perspective", "font": {"size": 16}},
         height=480,
         hovermode="x unified",
@@ -331,6 +334,7 @@ def build_markout_box(
     figure.add_vline(x=0.0, line_dash="dash", line_color="#888888", line_width=1)
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": f"Markout distribution at {int(horizon_seconds)}s — bp, LP perspective", "font": {"size": 16}},
         height=280,
         margin={"l": 20, "r": 20, "t": 56, "b": 30},
@@ -394,6 +398,7 @@ def build_tag_pair_heatmap(toxicity_df: pl.DataFrame, horizon_seconds: float) ->
 
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": f"Tag × pair toxicity score at {int(horizon_seconds)}s", "font": {"size": 16}},
         height=360,
         margin={"l": 20, "r": 20, "t": 56, "b": 30},
@@ -429,6 +434,7 @@ def build_pnl_waterfall(totals: Mapping[str, float]) -> go.Figure:
     )
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": "Total PnL attribution", "font": {"size": 16}},
         height=380,
         margin={"l": 20, "r": 20, "t": 56, "b": 30},
@@ -458,6 +464,7 @@ def build_pnl_bars_by_category(summary_df: pl.DataFrame, category_col: str, titl
     )
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": title, "font": {"size": 16}},
         height=340,
         margin={"l": 20, "r": 20, "t": 56, "b": 20},
@@ -518,6 +525,7 @@ def build_pnl_composition_stacked(summary_df: pl.DataFrame) -> go.Figure:
     )
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": "PnL composition by tag", "font": {"size": 16}},
         height=420,
         barmode="relative",
@@ -583,6 +591,7 @@ def build_pnl_by_hour(hourly_df: pl.DataFrame) -> go.Figure:
     )
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": "PnL by hour, by source", "font": {"size": 16}},
         height=360,
         barmode="relative",
@@ -639,6 +648,7 @@ def build_pnl_delta_by_tag(delta_df: pl.DataFrame) -> go.Figure:
     figure.add_vline(x=0.0, line_dash="dash", line_color="#888888", line_width=1)
     figure.update_layout(
         template="plotly_white",
+        font={"family": "Inter, sans-serif"},
         title={"text": "PnL change by tag (projected − current)", "font": {"size": 16}},
         height=340,
         margin={"l": 20, "r": 20, "t": 56, "b": 20},
