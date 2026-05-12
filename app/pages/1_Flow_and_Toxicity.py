@@ -105,20 +105,20 @@ def render_page() -> None:
     tag_pair_toxicity = compute_tag_pair_toxicity(filtered_markouts, horizon_seconds=selected_horizon)
     detail_table = per_tag_horizon_table(filtered_markouts)
 
-    st.plotly_chart(build_horizon_curve(horizon_curve, selected_tags), use_container_width=True)
+    st.plotly_chart(build_horizon_curve(horizon_curve, selected_tags), width="stretch")
 
     chart_columns = st.columns(2, gap="large")
     chart_columns[0].plotly_chart(
         build_markout_box(distribution, selected_horizon, selected_tags),
-        use_container_width=True,
+        width="stretch",
     )
     chart_columns[1].plotly_chart(
         build_tag_pair_heatmap(tag_pair_toxicity, selected_horizon),
-        use_container_width=True,
+        width="stretch",
     )
 
     st.subheader("Per-tag markout detail")
-    st.dataframe(style_detail_table(detail_table), use_container_width=True, hide_index=True, height=300)
+    st.dataframe(style_detail_table(detail_table), width="stretch", hide_index=True, height=300)
 
     st.caption(
         "Toxicity score = −mean(markout_bp) at horizon. Higher = more toxic. "

@@ -130,7 +130,7 @@ def render_page() -> None:
                         "Apply",
                         key=f"apply_{recommendation.tag}",
                         type="primary",
-                        use_container_width=True,
+                        width="stretch",
                     ):
                         st.session_state["pricing_config"] = apply_recommendation_to_config(active_config, recommendation)
                         st.toast(f"Applied {_action_label(recommendation)} for {recommendation.tag}", icon="✅")
@@ -140,7 +140,7 @@ def render_page() -> None:
 
     st.divider()
     action_cols = st.columns([2, 6], gap="large")
-    if action_cols[0].button("Apply all non-KEEP recommendations", type="primary", use_container_width=True):
+    if action_cols[0].button("Apply all non-KEEP recommendations", type="primary", width="stretch"):
         st.session_state["pricing_config"] = _apply_all_recommendations(active_config, recommendations)
         st.toast("Applied all current recommendations", icon="✅")
         st.rerun()

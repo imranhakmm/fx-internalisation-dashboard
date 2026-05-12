@@ -319,14 +319,14 @@ def render_page() -> None:
     route_flips = _build_route_flip_table(current_trades, projected_trades, pnl_delta_by_tag)
 
     chart_columns = st.columns([3, 2], gap="large")
-    chart_columns[0].plotly_chart(build_pnl_delta_by_tag(pnl_delta_by_tag), use_container_width=True)
+    chart_columns[0].plotly_chart(build_pnl_delta_by_tag(pnl_delta_by_tag), width="stretch")
     chart_columns[1].subheader("Route flips")
     if route_flips.is_empty():
         chart_columns[1].caption("No route changes from current config.")
     else:
         chart_columns[1].dataframe(
             _style_route_flips(route_flips),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             height=280,
         )

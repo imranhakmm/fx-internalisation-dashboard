@@ -81,25 +81,25 @@ def render_page() -> None:
     per_tag = data["per_tag"]
     per_pair = data["per_pair"]
 
-    st.plotly_chart(build_pnl_waterfall(attribution_totals), use_container_width=True)
+    st.plotly_chart(build_pnl_waterfall(attribution_totals), width="stretch")
 
     bar_columns = st.columns(2, gap="large")
     bar_columns[0].plotly_chart(
         build_pnl_bars_by_category(per_tag, "tag", "PnL by tag"),
-        use_container_width=True,
+        width="stretch",
     )
     bar_columns[1].plotly_chart(
         build_pnl_bars_by_category(per_pair, "pair", "PnL by pair"),
-        use_container_width=True,
+        width="stretch",
     )
 
-    st.plotly_chart(build_pnl_composition_stacked(per_tag), use_container_width=True)
-    st.plotly_chart(build_pnl_by_hour(attribution_by_hour), use_container_width=True)
+    st.plotly_chart(build_pnl_composition_stacked(per_tag), width="stretch")
+    st.plotly_chart(build_pnl_by_hour(attribution_by_hour), width="stretch")
 
     st.subheader("Per-tag PnL detail")
     st.dataframe(
         style_detail_table(build_detail_table(per_tag)),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         height=310,
     )

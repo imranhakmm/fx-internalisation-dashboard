@@ -301,21 +301,21 @@ def render_dashboard() -> None:
     )
 
     st.subheader("Cumulative PnL attribution")
-    st.plotly_chart(build_cumulative_pnl_chart(cumulative_ts), use_container_width=True)
+    st.plotly_chart(build_cumulative_pnl_chart(cumulative_ts), width="stretch")
 
     st.subheader("Routing breakdown")
     route_cols = st.columns(2)
     route_cols[0].plotly_chart(
         build_routing_breakdown_chart(pair_route_breakdown, "pair", "Notional share by pair"),
-        use_container_width=True,
+        width="stretch",
     )
     route_cols[1].plotly_chart(
         build_routing_breakdown_chart(tag_route_breakdown, "tag", "Notional share by tag"),
-        use_container_width=True,
+        width="stretch",
     )
 
     st.subheader("Flow toxicity by tag")
-    st.dataframe(style_toxicity_table(toxicity_table), hide_index=True, use_container_width=True, height=260)
+    st.dataframe(style_toxicity_table(toxicity_table), hide_index=True, width="stretch", height=260)
 
 
 def measure_loader_cache() -> tuple[float, float]:

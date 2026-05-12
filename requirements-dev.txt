@@ -1,5 +1,4 @@
 -r requirements.txt
-matplotlib>=3.8
 pytest>=8.0
 pdf2image>=1.16
 pypdf>=4.0
